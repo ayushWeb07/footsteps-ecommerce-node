@@ -5,7 +5,7 @@ const Order = require("../models/Order")
 
 
 // Create order
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
     const newOrder = new Order(req.body)
 
     try {
@@ -20,7 +20,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 
 // Update order
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", async (req, res) => {
 
     try {
         const updatedOrder = await Order.findByIdAndUpdate(req.params.id, {
@@ -37,7 +37,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 
 // Delete order
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id", async (req, res) => {
     try {
         const deletedOrder = await Order.findByIdAndDelete(req.params.id)
 
@@ -49,7 +49,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 
 
 // Get user orders
-router.get("/find/:userId", verifyToken, async (req, res) => {
+router.get("/find/:userId", async (req, res) => {
     try {
         const orders = await Order.find({ userId: req.params.userId })
 
@@ -62,7 +62,7 @@ router.get("/find/:userId", verifyToken, async (req, res) => {
 
 
 // Get all orders
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
     const query = req.query.new
     try {
         const orders = await Order.find()
@@ -76,7 +76,7 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 
 
 // Get order income
-router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+router.get("/income", async (req, res) => {
     const date = new Date()
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1))
     const prevMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1))
